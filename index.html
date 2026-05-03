@@ -4,13 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Garage Sale — Móveis, Eletros e Oportunidades Selecionadas</title>
+  <title>JA Garage Sale — Móveis e Objetos de Design Second Hand | Curadoria de Luxo Acessível</title>
   <meta name="description"
-    content="Catálogo digital com móveis, eletrodomésticos e itens de casa selecionados. Preços imperdíveis, negociação direta pelo WhatsApp.">
-  <meta property="og:title" content="Garage Sale — Catálogo Digital">
+    content="JA Garage Sale: curadoria de luxo acessível em móveis e objetos de design second hand pré-owned. Janice avalia, anuncia e vende com agilidade, sustentabilidade e olhar estético apurado.">
+  <meta property="og:title" content="JA Garage Sale — Curadoria de Luxo Acessível em Móveis Design">
   <meta property="og:description"
-    content="Peças selecionadas para sua casa. Móveis, eletros e oportunidades com curadoria especial.">
+    content="Móveis e objetos de design second hand com curadoria especializada. Peças pré-owned ressignificadas com inteligência e sustentabilidade por Janice.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=630&fit=crop">
+  <meta name="keywords" content="móveis second hand, objetos de design, curadoria de luxo, pré-owned, JA Garage Sale, Janice, sustentabilidade, design">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
 
@@ -27,13 +29,13 @@
         extend: {
           colors: {
             primary: {
-              DEFAULT: '#3f1023',
-              dark: '#2a0b17',
-              light: '#5c1835',
-              lighter: '#7a2249',
-              50: '#f8eef2',
-              100: '#f0dce3',
-              200: '#e5c5d0',
+              DEFAULT: '#551431',
+              dark: '#3a0d22',
+              light: '#6e1b40',
+              lighter: '#8a2252',
+              50: '#fdf0f4',
+              100: '#f7d6e0',
+              200: '#edaec2',
             },
             whatsapp: { DEFAULT: '#25D366', dark: '#1fba59' },
           },
@@ -96,7 +98,7 @@
   <header class="header-main sticky top-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-black/5 transition-shadow duration-300" id="header">
     <div class="max-w-site mx-auto px-7 h-[70px] flex items-center justify-between gap-5 max-md:px-4">
       <a href="/" class="font-display text-[1.55rem] font-bold text-primary tracking-tight whitespace-nowrap hover:opacity-80 transition-opacity">
-        Garage Sale<span class="text-primary-lighter">.</span>
+        JA Garage Sale<span class="text-primary-lighter">.</span>
       </a>
 
       <!-- Search Desktop -->
@@ -144,17 +146,61 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100/40 py-16 px-7 text-center max-md:py-10 max-md:px-4">
-    <div class="absolute top-[-60%] right-[-15%] w-[55%] h-[220%] bg-[radial-gradient(ellipse,rgba(63,16,35,0.04)_0%,transparent_60%)]"></div>
-    <div class="max-w-[640px] mx-auto relative z-10">
-      <h1 class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-semibold text-primary mb-3 tracking-tight leading-tight">
-        Produtos selecionados para sua casa
-      </h1>
-      <p class="text-[clamp(0.92rem,1.5vw,1.08rem)] text-gray-500 font-light">
-        Móveis, eletrodomésticos e oportunidades com curadoria especial da Janice
-      </p>
+  <!-- Hero — Apresentação da Janice -->
+  <section class="relative overflow-hidden bg-white py-20 px-7 max-md:py-12 max-md:px-4">
+    <!-- Subtle background texture -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(85,20,49,0.04)_0%,transparent_60%)]"></div>
+    <div class="max-w-[900px] mx-auto relative z-10">
+      <!-- Label -->
+      <p class="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-8 text-center">Curadoria de Luxo Acessível</p>
+
+      <!-- Profile card -->
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-14">
+        <!-- Circular photo placeholder -->
+        <div class="flex-shrink-0">
+          <div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-primary-50 border-4 border-primary-100 flex items-center justify-center overflow-hidden shadow-xl">
+            <!-- Replace the src below with Janice's actual photo -->
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face"
+              alt="Janice — Fundadora do JA Garage Sale"
+              class="w-full h-full object-cover">
+          </div>
+          <!-- Name below photo -->
+          <p class="text-center mt-4 font-display text-lg font-semibold text-primary">Janice</p>
+          <p class="text-center text-xs text-gray-400 tracking-wide">Fundadora · JA Garage Sale</p>
+        </div>
+
+        <!-- Bio text -->
+        <div class="flex-1 text-center md:text-left">
+          <h1 class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-semibold text-gray-900 leading-tight mb-6">
+            Móveis e objetos de design<br class="hidden md:block"> <span class="text-primary">second hand</span> com curadoria
+          </h1>
+          <p class="text-[clamp(0.95rem,1.5vw,1.05rem)] text-gray-600 leading-[1.85] max-w-[620px] mx-auto md:mx-0">
+            Janice é especialista em móveis e objetos de design second hand e fundadora do JA Garage Sale. Atua com curadoria de luxo acessível pré-owned, ressignificando peças com inteligência, sustentabilidade e olhar estético apurado. Avalia, anuncia e vende móveis com agilidade, atenção aos detalhes e comunicação clara, oferecendo uma solução prática para quem deseja desapegar com consciência.
+          </p>
+          <!-- Trust badges -->
+          <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
+            <span class="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Curadoria especializada
+            </span>
+            <span class="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Design pré-owned
+            </span>
+            <span class="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Sustentabilidade
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Divider -->
+    <div class="max-w-[900px] mx-auto mt-16 border-t border-gray-100"></div>
+    <!-- Catalog label -->
+    <p class="text-center text-xs font-semibold tracking-[0.18em] text-gray-400 uppercase mt-8">Catálogo de Peças</p>
   </section>
 
   <!-- Toolbar -->
@@ -212,11 +258,77 @@
     </svg>
   </a>
 
+  <!-- FAQ Accordion -->
+  <section class="max-w-[780px] mx-auto px-7 py-20 max-md:px-4 max-md:py-14">
+    <div class="text-center mb-12">
+      <p class="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">Tire suas dúvidas</p>
+      <h2 class="font-display text-[clamp(1.8rem,3vw,2.4rem)] font-semibold text-gray-900">Dúvidas Frequentes</h2>
+    </div>
+    <div class="divide-y divide-gray-100" id="faqAccordion">
+
+      <!-- FAQ Item 1 -->
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between py-5 text-left gap-4 group">
+          <span class="font-display text-base font-medium text-gray-900 group-hover:text-primary transition-colors">Como funciona a curadoria do JA Garage Sale?</span>
+          <svg class="faq-icon w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-body hidden pb-5">
+          <p class="text-gray-500 text-sm leading-relaxed">Cada peça passa por uma avaliação criteriosa feita pela Janice: estado de conservação, autenticidade, apelo estético e compatibilidade com o posicionamento de luxo acessível da marca. Apenas itens que atendem a esses critérios entram no catálogo.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between py-5 text-left gap-4 group">
+          <span class="font-display text-base font-medium text-gray-900 group-hover:text-primary transition-colors">Vocês fazem entrega? Qual é a área de cobertura?</span>
+          <svg class="faq-icon w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-body hidden pb-5">
+          <p class="text-gray-500 text-sm leading-relaxed">A entrega é combinada diretamente com a Janice via WhatsApp. Para peças grandes, trabalhamos com transportadoras parceiras de confiança. Entre em contato para verificar disponibilidade e orçamento de frete para sua região.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between py-5 text-left gap-4 group">
+          <span class="font-display text-base font-medium text-gray-900 group-hover:text-primary transition-colors">Quais formas de pagamento são aceitas?</span>
+          <svg class="faq-icon w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-body hidden pb-5">
+          <p class="text-gray-500 text-sm leading-relaxed">Aceitamos Pix (com desconto especial), transferência bancária e cartão de crédito via link de pagamento. Parcelamentos podem ser negociados dependendo do valor da peça. Tudo combinado com segurança pelo WhatsApp.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 4 -->
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between py-5 text-left gap-4 group">
+          <span class="font-display text-base font-medium text-gray-900 group-hover:text-primary transition-colors">Posso anunciar meus móveis pelo JA Garage Sale?</span>
+          <svg class="faq-icon w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-body hidden pb-5">
+          <p class="text-gray-500 text-sm leading-relaxed">Sim! O JA Garage Sale oferece um serviço completo para quem deseja desapegar com consciência. A Janice avalia sua peça, cria o anúncio, gerencia a comunicação com compradores e cuida de todo o processo de venda. Entre em contato pelo WhatsApp para saber mais.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Item 5 -->
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between py-5 text-left gap-4 group">
+          <span class="font-display text-base font-medium text-gray-900 group-hover:text-primary transition-colors">As peças são autênticas e em bom estado?</span>
+          <svg class="faq-icon w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <div class="faq-body hidden pb-5">
+          <p class="text-gray-500 text-sm leading-relaxed">Absolutamente. A curadoria rigorosa da Janice garante que cada peça seja descrita com total transparência — incluindo eventuais imperfeições. Acreditamos que honestidade é a base de uma negociação de luxo, mesmo no mercado second hand.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Newsletter Section -->
-  <section class="bg-gradient-to-br from-primary-50 to-primary-100/60 py-16 px-5 text-center mt-10">
+  <section class="bg-gradient-to-br from-primary-50 to-primary-100/60 py-16 px-5 text-center">
     <div class="max-w-[600px] mx-auto">
       <h2 class="font-display text-3xl font-semibold text-gray-900 mb-2.5">Fique por dentro das novidades</h2>
-      <p class="text-gray-500 mb-7">Receba em primeira mão as novas peças e oportunidades da Garage Sale.</p>
+      <p class="text-gray-500 mb-7">Receba em primeira mão as novas peças e oportunidades do JA Garage Sale.</p>
       <form id="newsForm" class="flex gap-2.5 justify-center max-[480px]:flex-col">
         <input type="email" id="newsEmail" placeholder="Digite seu melhor e-mail" required
           class="flex-1 max-w-[350px] py-3 px-4 border border-gray-200 rounded-xl text-base outline-none bg-white transition-all focus:border-primary-200 focus:ring-4 focus:ring-primary-50 max-[480px]:max-w-full">
@@ -231,8 +343,8 @@
 
   <!-- Footer -->
   <footer class="bg-primary-50/70 text-gray-600 py-12 px-7 text-center">
-    <div class="font-display text-xl font-bold text-primary mb-2">Garage Sale<span class="text-primary-lighter">.</span></div>
-    <p class="text-sm text-gray-500 mb-7">Curadoria de peças selecionadas para sua casa</p>
+    <div class="font-display text-xl font-bold text-primary mb-1">JA Garage Sale<span class="text-primary-lighter">.</span></div>
+    <p class="text-sm text-gray-500 mb-7">Curadoria de luxo acessível em móveis e design second hand</p>
     <div class="flex justify-center gap-6 mb-7 flex-wrap">
       <a href="https://wa.me/5531992428170" target="_blank" class="text-sm text-gray-500 transition-colors hover:text-primary">💬 WhatsApp</a>
       <a href="#" onclick="document.getElementById('searchInput').focus();return false;" class="text-sm text-gray-500 transition-colors hover:text-primary">🔍 Buscar</a>
@@ -240,8 +352,30 @@
       <a href="admin.html" class="text-sm text-gray-500 transition-colors hover:text-primary">🔐 Admin</a>
     </div>
     <div class="w-14 h-px bg-primary-200/60 mx-auto mb-5"></div>
-    <p class="text-xs text-gray-400">&copy; 2026 Garage Sale. Todos os direitos reservados.</p>
+    <p class="text-xs text-gray-400">&copy; 2026 JA Garage Sale. Todos os direitos reservados.</p>
   </footer>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const body = item.querySelector('.faq-body');
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = !body.classList.contains('hidden');
+
+      // Close all open items
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.querySelector('.faq-body').classList.add('hidden');
+        el.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+      });
+
+      // If was closed, open it
+      if (!isOpen) {
+        body.classList.remove('hidden');
+        icon.style.transform = 'rotate(45deg)';
+      }
+    }
+  </script>
 
   <!-- Firebase SDK (compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
