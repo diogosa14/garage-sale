@@ -52,6 +52,18 @@
     return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   }
 
+  // ========== GET THUMBNAIL (multi-photo fallback) ==========
+  function getThumb(p) {
+    return (p.images && p.images.length > 0) ? p.images[0] : (p.imageUrl || "");
+  }
+
+  const CONDITION_LABELS = {
+    impecavel:         "Impecável",
+    excelente:         "Excelente",
+    "marcas-do-tempo": "Marcas do Tempo",
+    "a-restaurar":     "A Restaurar",
+  };
+
   // ========== HERO VISIBILITY ==========
   function updateHeroVisibility() {
     if (!heroSection) return;
@@ -169,15 +181,21 @@
     grid.innerHTML = filteredProducts.map((p, i) => {
       const catLabel = CATEGORIES.find(c => c.id === p.category)?.name || p.category;
       const desc = p.description ? p.description.substring(0, 80) + (p.description.length > 80 ? "..." : "") : "";
-      const inCart = cart.some(c => c.id === p.id);
+      const inCart   = cart.some(c => c.id === p.id);
+      const thumb    = getThumb(p);
+      const hasMulti = p.images && p.images.length > 1;
       return `
         <article class="product-card group bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer opacity-0 animate-card-in transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
           data-id="${p.id}" style="animation-delay:${Math.min(i * 0.06, 0.5)}s">
           <div class="relative w-full" style="padding-top:90%">
-            <img src="${p.imageUrl}" alt="${p.name}" loading="lazy"
+            <img src="${thumb}" alt="${p.name}" loading="lazy"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22><rect fill=%22%23f7d6e0%22 width=%22400%22 height=%22400%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%23551431%22 font-size=%2240%22 text-anchor=%22middle%22 dy=%22.3em%22>📷</text></svg>'">
+              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22><rect fill=%22%23f7d6e0%22 width=%22400%22 height=%22400%22/></svg>'">
             ${p.featured ? '<span class="absolute top-3 left-3 px-2.5 py-1 bg-primary text-white text-[0.7rem] font-semibold rounded-lg uppercase tracking-wide">Destaque</span>' : ""}
+            ${hasMulti ? `<span class="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/40 text-white text-[0.65rem] font-semibold rounded-lg backdrop-blur-sm">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909"/></svg>
+              ${p.images.length}
+            </span>` : ""}
             <button class="add-to-cart-btn absolute bottom-3 right-3 w-9 h-9 flex items-center justify-center rounded-full shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0
               ${inCart ? "bg-primary text-white" : "bg-white text-primary hover:bg-primary hover:text-white"}"
               data-id="${p.id}" title="${inCart ? "No carrinho" : "Adicionar ao carrinho"}">
@@ -195,22 +213,103 @@
           </div>
         </article>`;
     }).join("");
+
   }
 
   // ========== MODAL ==========
+  let _modalImages = [];
+  let _modalIdx = 0;
+
   function openModal(product) {
     const catLabel = CATEGORIES.find(c => c.id === product.category)?.name || product.category;
-    document.getElementById("modalImg").src = product.imageUrl;
-    document.getElementById("modalImg").alt = product.name;
-    document.getElementById("modalCategory").textContent = catLabel;
-    document.getElementById("modalName").textContent = product.name;
-    document.getElementById("modalPrice").innerHTML = `<span class="text-base font-normal">R$</span> ${formatPrice(product.price)}`;
-    document.getElementById("modalDesc").textContent = product.description || "";
-    document.getElementById("modalWhatsapp").href = generateWhatsAppLink(product);
+
+    // Build images array with fallback
+    _modalImages = (product.images && product.images.length > 0)
+      ? product.images
+      : (product.imageUrl ? [product.imageUrl] : []);
+    _modalIdx = 0;
+
+    // Carousel
+    renderModalCarousel();
+
+    // Text fields
+    document.getElementById("modalCategory").textContent  = catLabel;
+    document.getElementById("modalName").textContent      = product.name;
+    document.getElementById("modalPrice").innerHTML       = `<span class="text-base font-normal">R$</span> ${formatPrice(product.price)}`;
+    document.getElementById("modalDesc").textContent      = product.description || "";
+    document.getElementById("modalWhatsapp").href         = generateWhatsAppLink(product);
+
+    // Technical data
+    const condLabel = CONDITION_LABELS[product.condition] || product.condition || null;
+    const condEl    = document.getElementById("modalCondition");
+    const dimEl     = document.getElementById("modalDimensions");
+    const storyEl   = document.getElementById("modalStory");
+    const techBlock = document.getElementById("modalTechData");
+
+    if (condEl)  condEl.textContent  = condLabel || "";
+    if (dimEl)   dimEl.textContent   = product.dimensions || "";
+    if (storyEl) storyEl.textContent = product.curationStory || "";
+    if (techBlock) {
+      const hasData = condLabel || product.dimensions || product.curationStory;
+      techBlock.classList.toggle("hidden", !hasData);
+    }
+
+    // Cart button
     const addBtn = document.getElementById("modalAddToCart");
     if (addBtn) { addBtn.dataset.id = product.id; updateModalCartBtn(product.id); }
+
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
+  }
+
+  function renderModalCarousel() {
+    const container = document.getElementById("modalCarousel");
+    if (!container) return;
+
+    if (_modalImages.length === 0) {
+      container.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-gray-50"><svg class="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909"/></svg></div>';
+      return;
+    }
+
+    const multiNav = _modalImages.length > 1 ? `
+      <button id="modalPrev" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-white/80 backdrop-blur rounded-full shadow hover:bg-white transition-all z-10">
+        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+      </button>
+      <button id="modalNext" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-white/80 backdrop-blur rounded-full shadow hover:bg-white transition-all z-10">
+        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+      </button>
+      <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+        ${_modalImages.map((_, i) => `<button class="modal-dot w-1.5 h-1.5 rounded-full transition-all ${i === 0 ? "bg-white scale-125" : "bg-white/50"}" data-idx="${i}"></button>`).join("")}
+      </div>` : "";
+
+    container.innerHTML = `
+      <div class="relative w-full h-full">
+        <img id="modalImg" src="${_modalImages[0]}" alt="" class="w-full h-full object-cover">
+        ${multiNav}
+      </div>`;
+
+    if (_modalImages.length > 1) {
+      document.getElementById("modalPrev").addEventListener("click", () => navigateModal(-1));
+      document.getElementById("modalNext").addEventListener("click", () => navigateModal(+1));
+      container.querySelectorAll(".modal-dot").forEach(btn => {
+        btn.addEventListener("click", () => { _modalIdx = parseInt(btn.dataset.idx); updateModalImage(); });
+      });
+    }
+  }
+
+  function navigateModal(dir) {
+    _modalIdx = (_modalIdx + dir + _modalImages.length) % _modalImages.length;
+    updateModalImage();
+  }
+
+  function updateModalImage() {
+    const img = document.getElementById("modalImg");
+    if (img) img.src = _modalImages[_modalIdx];
+    document.querySelectorAll(".modal-dot").forEach((btn, i) => {
+      btn.classList.toggle("bg-white", i === _modalIdx);
+      btn.classList.toggle("scale-125", i === _modalIdx);
+      btn.classList.toggle("bg-white/50", i !== _modalIdx);
+    });
   }
 
   function updateModalCartBtn(productId) {
