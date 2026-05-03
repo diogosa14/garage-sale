@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Garage Sale</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#3f1023',
+              dark: '#2a0b17',
+              light: '#5c1835',
+              lighter: '#7a2249',
+              50: '#f8eef2',
+              100: '#f0dce3',
+              200: '#e5c5d0',
+            },
+            whatsapp: { DEFAULT: '#25D366', dark: '#1fba59' },
+            success: { DEFAULT: '#27ae60', light: '#e8f8ef' },
+            danger: { DEFAULT: '#c0392b', light: '#fdecea' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+          maxWidth: { 'admin': '1100px' },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* Toast states */
+    .toast-msg {
+      @apply fixed bottom-7 left-1/2 -translate-x-1/2 translate-y-[100px] bg-gray-900 text-white py-3 px-6 rounded-xl text-sm z-[999] transition-transform duration-300 shadow-2xl;
+    }
+    .toast-msg.visible { @apply translate-y-0; }
+    .toast-msg.success { @apply bg-success; }
+    .toast-msg.error { @apply bg-danger; }
+
+    /* Upload drag state */
+    .upload-zone.dragover { @apply border-primary bg-primary-50; }
+  </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-900 antialiased leading-normal min-h-screen">
+
+  <!-- LOGIN SCREEN -->
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-primary-100 p-6" id="loginScreen">
+    <div class="bg-white rounded-2xl p-12 w-full max-w-[400px] shadow-[0_20px_60px_rgba(0,0,0,0.08)] max-md:p-8 max-md:px-6">
+      <div class="font-display text-2xl font-semibold text-primary text-center mb-2">Garage Sale<span class="text-primary-lighter">.</span></div>
+      <p class="text-center text-gray-400 text-sm mb-8">Painel Administrativo</p>
+      <div class="hidden bg-danger-light text-danger py-2.5 px-3.5 rounded-lg text-sm mb-4" id="loginError"></div>
+      <form id="loginForm">
+        <div class="mb-3.5">
+          <label class="block text-sm font-medium text-gray-600 mb-1.5">Email</label>
+          <input type="email" id="loginEmail" placeholder="seu@email.com" required
+            class="w-full py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-600 mb-1.5">Senha</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required
+            class="w-full py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50">
+        </div>
+        <button type="submit" id="loginBtn"
+          class="w-full py-3 bg-primary text-white rounded-lg text-sm font-medium transition-all hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-50 disabled:pointer-events-none">
+          Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN APP -->
+  <div class="hidden" id="adminApp">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-100 px-7 h-16 flex items-center justify-between sticky top-0 z-50 max-md:px-4">
+      <div class="font-display text-lg font-semibold text-primary">
+        Garage Sale<span class="text-primary-lighter">.</span>
+        <small class="font-sans text-xs font-normal text-gray-400 ml-2 max-md:hidden">Admin</small>
+      </div>
+      <nav class="flex items-center gap-3">
+        <a href="index.html" target="_blank"
+          class="py-1.5 px-4 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-600 transition-all hover:border-primary hover:text-primary">
+          🌐 Ver Site
+        </a>
+        <button id="logoutBtn"
+          class="py-1.5 px-4 bg-gray-50 rounded-lg text-sm text-gray-600 transition-all hover:bg-danger-light hover:text-danger">
+          Sair
+        </button>
+      </nav>
+    </header>
+
+    <main class="max-w-admin mx-auto p-7 max-md:p-4">
+      <!-- Setup Notice -->
+      <div class="hidden bg-primary-50 border-[1.5px] border-primary-100 rounded-xl p-6 mb-7" id="setupNotice">
+        <h3 class="font-display text-primary mb-2">⚙️ Firebase não configurado</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Para gerenciar produtos, configure o Firebase no arquivo <code class="bg-white px-1.5 py-0.5 rounded text-sm">js/firebase-config.js</code>.<br>
+          Consulte o <strong>README.md</strong> para instruções passo a passo.<br><br>
+          Enquanto isso, o site exibe produtos de demonstração automaticamente.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4 mb-7 max-md:grid-cols-2" id="statsRow">
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Total de Produtos</div>
+          <div class="text-2xl font-bold text-primary" id="statTotal">0</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Disponíveis</div>
+          <div class="text-2xl font-bold text-primary" id="statAvailable">0</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Destaques</div>
+          <div class="text-2xl font-bold text-primary" id="statFeatured">0</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Categorias</div>
+          <div class="text-2xl font-bold text-primary" id="statCategories">0</div>
+        </div>
+      </div>
+
+      <!-- Product Form -->
+      <div class="bg-white rounded-xl p-7 shadow-sm mb-7 max-md:p-4" id="formSection">
+        <h2 class="font-display text-xl mb-6 text-gray-900" id="formTitle">➕ Adicionar Produto</h2>
+        <form id="productForm">
+          <input type="hidden" id="editId">
+          <div class="grid grid-cols-2 gap-4 max-md:grid-cols-1">
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-600 mb-1.5">Nome do Produto *</label>
+              <input type="text" id="pName" placeholder="Ex: Sofá 3 Lugares" required
+                class="py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50">
+            </div>
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-600 mb-1.5">Preço (R$) *</label>
+              <input type="number" id="pPrice" placeholder="1500" min="0" step="1" required
+                class="py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50">
+            </div>
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-600 mb-1.5">Categoria *</label>
+              <select id="pCategory" required
+                class="py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50">
+                <option value="">Selecione...</option>
+                <option value="sala">🛋️ Sala</option>
+                <option value="cozinha">🍳 Cozinha</option>
+                <option value="quarto">🛏️ Quarto</option>
+                <option value="banheiro">🚿 Banheiro</option>
+                <option value="area-externa">🌳 Área Externa</option>
+                <option value="eletros">⚡ Eletrodomésticos</option>
+                <option value="oportunidades">🏷️ Oportunidades</option>
+              </select>
+            </div>
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-600 mb-1.5">URL da Imagem (opcional)</label>
+              <input type="url" id="pImageUrl" placeholder="https://..."
+                class="py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50">
+            </div>
+            <div class="flex flex-col col-span-full">
+              <label class="text-sm font-medium text-gray-600 mb-1.5">Descrição</label>
+              <textarea id="pDesc" placeholder="Descreva o produto, estado de conservação, medidas..."
+                class="py-2.5 px-3.5 bg-gray-50 border-[1.5px] border-gray-200 rounded-lg text-sm text-gray-900 outline-none transition-all min-h-[100px] resize-y focus:bg-white focus:border-primary-100 focus:ring-[3px] focus:ring-primary-50"></textarea>
+            </div>
+            <div class="flex flex-col col-span-full">
+              <label class="text-sm font-medium text-gray-600 mb-1.5">Foto do Produto</label>
+              <div class="upload-zone border-2 border-dashed border-gray-200 rounded-xl p-8 text-center cursor-pointer transition-all relative hover:border-primary hover:bg-primary-50" id="uploadArea">
+                <input type="file" id="pFile" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                <div class="text-3xl mb-2">📷</div>
+                <div class="text-sm text-gray-500">Arraste uma foto ou <strong class="text-primary">clique para selecionar</strong></div>
+                <div class="text-xs text-gray-400 mt-3">ou cole uma URL de imagem no campo acima</div>
+                <div class="hidden mt-3" id="uploadPreview">
+                  <img id="previewImg" src="" alt="Preview" class="max-h-[160px] rounded-lg mx-auto">
+                </div>
+              </div>
+            </div>
+            <div class="col-span-full">
+              <div class="flex gap-6 items-center">
+                <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                  <input type="checkbox" id="pFeatured" class="w-[18px] h-[18px] accent-primary cursor-pointer"> Produto em destaque
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                  <input type="checkbox" id="pAvailable" checked class="w-[18px] h-[18px] accent-primary cursor-pointer"> Disponível para venda
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-3 mt-5">
+            <button type="submit" id="submitBtn"
+              class="py-3 px-7 bg-primary text-white rounded-lg text-sm font-medium transition-all hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-50 disabled:pointer-events-none">
+              Salvar Produto
+            </button>
+            <button type="button" id="cancelBtn"
+              class="hidden py-3 px-7 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium border-[1.5px] border-gray-200 transition-all hover:bg-gray-100">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Product List -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-display text-xl">📦 Produtos Cadastrados</h2>
+        </div>
+        <div class="flex flex-col gap-2.5" id="productList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Newsletter Subscribers (Admin) -->
+      <div class="mt-12 pt-8 border-t-2 border-gray-100">
+        <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+          <h2 class="font-display text-xl">📬 Inscritos na Newsletter</h2>
+          <button id="btnCopyEmails"
+            class="py-2.5 px-5 bg-primary text-white rounded-lg text-sm font-medium transition-all hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-lg">
+            Copiar Todos os E-mails
+          </button>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-xl">
+          <p class="text-sm text-gray-500 mb-2.5">Estes e-mails estão prontos para você colar no campo "Cco" (Cópia Oculta) do seu Gmail:</p>
+          <textarea id="subscribersList" rows="4" readonly
+            class="w-full py-2.5 px-3.5 rounded-lg border border-gray-200 font-mono text-sm resize-y bg-white outline-none">Carregando e-mails...</textarea>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-msg" id="toast"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

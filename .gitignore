@@ -1,0 +1,12 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Old CSS files (migrated to Tailwind)
+css/style.css
+css/admin.css
