@@ -84,6 +84,19 @@
     /* Hide scrollbar on cat nav */
     .cat-scroll::-webkit-scrollbar { display: none; }
     .cat-scroll { scrollbar-width: none; }
+
+    /* FAQ smooth accordion */
+    .faq-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .faq-body.open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+    .faq-body > div { overflow: hidden; }
   </style>
 </head>
 
@@ -180,11 +193,10 @@
         <!-- Circular photo — imponent size -->
         <div class="flex-shrink-0 flex flex-col items-center">
           <div class="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl ring-4 ring-primary-100 ring-offset-4 ring-offset-white">
-            <!-- Replace src with Janice's actual photo -->
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&fit=crop&crop=face"
+              src="img/janice.jpg"
               alt="Janice — Fundadora do JA Garage Sale"
-              class="w-full h-full object-cover">
+              class="w-full h-full object-cover object-top">
           </div>
           <p class="mt-6 font-display text-xl font-semibold text-primary tracking-tight">Janice</p>
           <p class="mt-1 text-xs text-gray-400 tracking-widest uppercase">Fundadora · JA Garage Sale</p>
@@ -222,7 +234,7 @@
 
     <!-- Scroll indicator — bouncing arrow anchored to catalog -->
     <a href="#catalogSection"
-      class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-400 hover:text-primary transition-colors duration-300 z-10 max-md:bottom-5">
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-400 hover:text-primary transition-all duration-300 ease-in-out z-10 max-md:bottom-5">
       <span class="text-[0.6rem] font-semibold tracking-[0.25em] uppercase">explorar acervo</span>
       <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
@@ -268,8 +280,9 @@
         <p class="text-sm text-gray-500 leading-relaxed mb-7 flex-1" id="modalDesc"></p>
         <!-- Add to Cart -->
         <button id="modalAddToCart" data-id=""
-          class="flex items-center justify-center gap-2 w-full py-3.5 px-6 bg-primary text-white rounded-xl text-base font-semibold transition-all duration-300 hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-lg mb-3">
-          🛒 Adicionar ao carrinho
+          class="flex items-center justify-center gap-2 w-full py-3.5 px-6 bg-primary text-white rounded-xl text-base font-semibold transition-all duration-300 ease-in-out hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-lg mb-3">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+          Adicionar ao carrinho
         </button>
         <a href="#" id="modalWhatsapp" target="_blank"
           class="flex items-center justify-center gap-2.5 w-full py-3.5 px-6 bg-whatsapp text-white rounded-xl text-base font-semibold transition-all duration-300 hover:bg-whatsapp-dark hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(37,211,102,0.35)]">
@@ -289,6 +302,65 @@
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
     </svg>
   </a>
+
+  <!-- Testimonials Section -->
+  <section class="max-w-site mx-auto px-7 py-20 max-md:px-4 max-md:py-14">
+    <div class="text-center mb-14">
+      <p class="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">Experiências reais</p>
+      <h2 class="font-display text-[clamp(1.8rem,3vw,2.4rem)] font-semibold text-gray-900">O que dizem nossos clientes</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Testimonial 1 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-50 flex flex-col gap-5 hover:shadow-md transition-shadow duration-300">
+        <div class="flex gap-1">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1">"A curadoria da Janice é impecável. Cada peça que ela seleciona tem uma história e uma qualidade que você simplesmente não encontra em loja comum. A Mesa Saarinen que comprei parece ter saído de showroom."</p>
+        <div class="pt-4 border-t border-gray-50">
+          <p class="font-semibold text-sm text-gray-900">Fernanda Alves</p>
+          <p class="text-xs text-primary-lighter mt-0.5">Mesa de Jantar Saarinen</p>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-50 flex flex-col gap-5 hover:shadow-md transition-shadow duration-300">
+        <div class="flex gap-1">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1">"Fiquei impressionada com a agilidade. Fechi negócio numa quinta à tarde e no sábado de manhã o aparador já estava na minha sala. Comunicação clara, embalagem cuidadosa e tudo exatamente como descrito."</p>
+        <div class="pt-4 border-t border-gray-50">
+          <p class="font-semibold text-sm text-gray-900">Carla Mendonça</p>
+          <p class="text-xs text-primary-lighter mt-0.5">Aparador Escandinavo</p>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-50 flex flex-col gap-5 hover:shadow-md transition-shadow duration-300">
+        <div class="flex gap-1">
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1">"O estado do sofá era perfeito — sem nenhum desgaste escondido. A Janice descreveu cada detalhe com transparência total. Isso é raro no mercado second hand. Já indiquei para três amigas."</p>
+        <div class="pt-4 border-t border-gray-50">
+          <p class="font-semibold text-sm text-gray-900">Beatriz Drummond</p>
+          <p class="text-xs text-primary-lighter mt-0.5">Sofá de Linho Italiano</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- FAQ Accordion -->
   <section class="max-w-[780px] mx-auto px-7 py-20 max-md:px-4 max-md:py-14">
@@ -378,10 +450,22 @@
     <div class="font-display text-xl font-bold text-primary mb-1">JA Garage Sale<span class="text-primary-lighter">.</span></div>
     <p class="text-sm text-gray-500 mb-7">Curadoria de luxo acessível em móveis e design second hand</p>
     <div class="flex justify-center gap-6 mb-7 flex-wrap">
-      <a href="https://wa.me/5531992428170" target="_blank" class="text-sm text-gray-500 transition-colors hover:text-primary">💬 WhatsApp</a>
-      <a href="#" onclick="document.getElementById('searchInput').focus();return false;" class="text-sm text-gray-500 transition-colors hover:text-primary">🔍 Buscar</a>
-      <a href="sobre.html" class="text-sm text-gray-500 transition-colors hover:text-primary">📖 Sobre a Loja</a>
-      <a href="admin.html" class="text-sm text-gray-500 transition-colors hover:text-primary">🔐 Admin</a>
+      <a href="https://wa.me/5531992428170" target="_blank" class="inline-flex items-center gap-1.5 text-sm text-gray-500 transition-all duration-300 ease-in-out hover:text-primary">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#" onclick="document.getElementById('searchInput').focus();return false;" class="inline-flex items-center gap-1.5 text-sm text-gray-500 transition-all duration-300 ease-in-out hover:text-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Buscar
+      </a>
+      <a href="sobre.html" class="inline-flex items-center gap-1.5 text-sm text-gray-500 transition-all duration-300 ease-in-out hover:text-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+        Sobre a Loja
+      </a>
+      <a href="admin.html" class="inline-flex items-center gap-1.5 text-sm text-gray-500 transition-all duration-300 ease-in-out hover:text-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
+        Admin
+      </a>
     </div>
     <div class="w-14 h-px bg-primary-200/60 mx-auto mb-5"></div>
     <p class="text-xs text-gray-400">&copy; 2026 JA Garage Sale. Todos os direitos reservados.</p>
@@ -424,21 +508,31 @@
 
   <!-- FAQ Accordion Script -->
   <script>
+    // Wrap all faq-body content in an inner div for grid animation
+    document.querySelectorAll('.faq-body').forEach(body => {
+      if (!body.querySelector('.faq-inner')) {
+        const inner = document.createElement('div');
+        inner.className = 'faq-inner pb-5';
+        while (body.firstChild) inner.appendChild(body.firstChild);
+        body.appendChild(inner);
+      }
+    });
+
     function toggleFaq(btn) {
       const item = btn.parentElement;
       const body = item.querySelector('.faq-body');
       const icon = btn.querySelector('.faq-icon');
-      const isOpen = !body.classList.contains('hidden');
+      const isOpen = body.classList.contains('open');
 
-      // Close all open items
+      // Close all
       document.querySelectorAll('.faq-item').forEach(el => {
-        el.querySelector('.faq-body').classList.add('hidden');
+        el.querySelector('.faq-body').classList.remove('open');
         el.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
       });
 
-      // If was closed, open it
+      // Open if was closed
       if (!isOpen) {
-        body.classList.remove('hidden');
+        body.classList.add('open');
         icon.style.transform = 'rotate(45deg)';
       }
     }

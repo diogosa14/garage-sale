@@ -57,8 +57,14 @@
     if (!heroSection) return;
     const showHero = activeCategory === "todos" && searchQuery === "";
     heroSection.classList.toggle("hidden", !showHero);
+
     if (!showHero && catalogSection) {
-      setTimeout(() => catalogSection.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+      // Only scroll if the hero section is currently in the viewport
+      const heroRect = heroSection.getBoundingClientRect();
+      const heroVisible = heroRect.top < window.innerHeight && heroRect.bottom > 0;
+      if (heroVisible) {
+        setTimeout(() => catalogSection.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+      }
     }
   }
 
