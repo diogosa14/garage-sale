@@ -147,49 +147,56 @@
   </nav>
 
   <!-- Hero — Apresentação da Janice -->
-  <section class="relative overflow-hidden bg-white py-20 px-7 max-md:py-12 max-md:px-4">
-    <!-- Subtle background texture -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(85,20,49,0.04)_0%,transparent_60%)]"></div>
-    <div class="max-w-[900px] mx-auto relative z-10">
-      <!-- Label -->
-      <p class="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-8 text-center">Curadoria de Luxo Acessível</p>
+  <section class="relative overflow-hidden bg-white min-h-[85vh] flex flex-col items-center justify-center px-7 max-md:px-5">
+    <!-- Dual radial background texture -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(85,20,49,0.05)_0%,transparent_55%)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(85,20,49,0.03)_0%,transparent_50%)] pointer-events-none"></div>
 
-      <!-- Profile card -->
-      <div class="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-14">
-        <!-- Circular photo placeholder -->
-        <div class="flex-shrink-0">
-          <div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-primary-50 border-4 border-primary-100 flex items-center justify-center overflow-hidden shadow-xl">
-            <!-- Replace the src below with Janice's actual photo -->
+    <!-- Main content — vertically & horizontally centered -->
+    <div class="max-w-[1000px] w-full mx-auto relative z-10 flex flex-col items-center py-16 max-md:py-10">
+
+      <!-- Eyebrow label -->
+      <p class="text-[0.65rem] font-bold tracking-[0.3em] text-primary uppercase mb-12 max-md:mb-8">Curadoria de Luxo Acessível</p>
+
+      <!-- Profile layout: photo left, text right on desktop / stacked on mobile -->
+      <div class="flex flex-col md:flex-row items-center gap-14 md:gap-20 w-full max-md:gap-10">
+
+        <!-- Circular photo — imponent size -->
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl ring-4 ring-primary-100 ring-offset-4 ring-offset-white">
+            <!-- Replace src with Janice's actual photo -->
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face"
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&fit=crop&crop=face"
               alt="Janice — Fundadora do JA Garage Sale"
               class="w-full h-full object-cover">
           </div>
-          <!-- Name below photo -->
-          <p class="text-center mt-4 font-display text-lg font-semibold text-primary">Janice</p>
-          <p class="text-center text-xs text-gray-400 tracking-wide">Fundadora · JA Garage Sale</p>
+          <p class="mt-6 font-display text-xl font-semibold text-primary tracking-tight">Janice</p>
+          <p class="mt-1 text-xs text-gray-400 tracking-widest uppercase">Fundadora · JA Garage Sale</p>
         </div>
 
-        <!-- Bio text -->
+        <!-- Bio text block — magazine scale -->
         <div class="flex-1 text-center md:text-left">
-          <h1 class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-semibold text-gray-900 leading-tight mb-6">
-            Móveis e objetos de design<br class="hidden md:block"> <span class="text-primary">second hand</span> com curadoria
+          <h1 class="font-display text-[clamp(2rem,4.5vw,3.8rem)] font-semibold text-gray-900 leading-[1.15] tracking-tight mb-7 max-md:mb-5">
+            Móveis e objetos<br class="hidden md:block">
+            de design <span class="text-primary italic">second hand</span><br class="hidden md:block">
+            com curadoria
           </h1>
-          <p class="text-[clamp(0.95rem,1.5vw,1.05rem)] text-gray-600 leading-[1.85] max-w-[620px] mx-auto md:mx-0">
+          <p class="text-[clamp(1rem,1.6vw,1.15rem)] text-gray-500 leading-[1.9] max-w-[580px] mx-auto md:mx-0">
             Janice é especialista em móveis e objetos de design second hand e fundadora do JA Garage Sale. Atua com curadoria de luxo acessível pré-owned, ressignificando peças com inteligência, sustentabilidade e olhar estético apurado. Avalia, anuncia e vende móveis com agilidade, atenção aos detalhes e comunicação clara, oferecendo uma solução prática para quem deseja desapegar com consciência.
           </p>
+
           <!-- Trust badges -->
-          <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
-            <span class="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
-              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          <div class="flex flex-wrap gap-3 mt-10 justify-center md:justify-start max-md:mt-7">
+            <span class="inline-flex items-center gap-2 text-xs font-semibold text-primary bg-primary-50 px-5 py-2.5 rounded-full border border-primary-100 tracking-wide">
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               Curadoria especializada
             </span>
-            <span class="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
-              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span class="inline-flex items-center gap-2 text-xs font-semibold text-primary bg-primary-50 px-5 py-2.5 rounded-full border border-primary-100 tracking-wide">
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               Design pré-owned
             </span>
-            <span class="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary-50 px-4 py-2 rounded-full border border-primary-100">
-              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span class="inline-flex items-center gap-2 text-xs font-semibold text-primary bg-primary-50 px-5 py-2.5 rounded-full border border-primary-100 tracking-wide">
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               Sustentabilidade
             </span>
           </div>
@@ -197,14 +204,18 @@
       </div>
     </div>
 
-    <!-- Divider -->
-    <div class="max-w-[900px] mx-auto mt-16 border-t border-gray-100"></div>
-    <!-- Catalog label -->
-    <p class="text-center text-xs font-semibold tracking-[0.18em] text-gray-400 uppercase mt-8">Catálogo de Peças</p>
+    <!-- Scroll indicator — bouncing arrow anchored to catalog -->
+    <a href="#catalogSection"
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-400 hover:text-primary transition-colors duration-300 z-10 max-md:bottom-5">
+      <span class="text-[0.6rem] font-semibold tracking-[0.25em] uppercase">explorar acervo</span>
+      <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </a>
   </section>
 
   <!-- Toolbar -->
-  <div class="max-w-site mx-auto px-7 py-4 flex items-center justify-between gap-4 flex-wrap max-md:px-4 max-md:py-3">
+  <div id="catalogSection" class="max-w-site mx-auto px-7 py-4 flex items-center justify-between gap-4 flex-wrap max-md:px-4 max-md:py-3">
     <div class="text-sm text-gray-500" id="resultsInfo">
       <strong class="text-gray-900 font-semibold">0</strong> produtos encontrados
     </div>
