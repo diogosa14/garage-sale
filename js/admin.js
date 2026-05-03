@@ -243,6 +243,47 @@
       });
       renderPhotoGrid();
     });
+
+    // ========== REACTIVE PRICE LOGIC ==========
+    const fOriginal  = document.getElementById("pOriginalPrice");
+    const fSale      = document.getElementById("pPrice");
+    const fDiscount  = document.getElementById("pDiscount");
+
+    // Original + Sale  →  auto-calculate Discount
+    function calcDiscount() {
+      const orig = parseFloat(fOriginal.value);
+      const sale = parseFloat(fSale.value);
+      if (orig > 0 && sale >= 0 && sale <= orig) {
+        fDiscount.value = Math.round(((orig - sale) / orig) * 100);
+      } else if (sale > orig && orig > 0) {
+        // Sale cannot exceed original when original is set
+        fSale.value = orig;
+        fDiscount.value = 0;
+      } else {
+        fDiscount.value = "";
+      }
+    }
+
+    // Original + Discount  →  auto-calculate Sale
+    function calcSaleFromDiscount() {
+      const orig     = parseFloat(fOriginal.value);
+      const discount = parseFloat(fDiscount.value);
+      if (orig > 0 && discount >= 0 && discount <= 100) {
+        fSale.value = Math.round(orig * (1 - discount / 100));
+      }
+    }
+
+    let _priceLock = false; // prevent circular updates
+    fSale.addEventListener("input", () => { if (!_priceLock) { _priceLock = true; calcDiscount();     _priceLock = false; } });
+    fDiscount.addEventListener("input", () => { if (!_priceLock) { _priceLock = true; calcSaleFromDiscount(); _priceLock = false; } });
+    fOriginal.addEventListener("input", () => {
+      if (!_priceLock) {
+        _priceLock = true;
+        // Prefer discount field if filled, otherwise recalc discount from sale
+        if (fDiscount.value !== "") calcSaleFromDiscount(); else calcDiscount();
+        _priceLock = false;
+      }
+    });
   }
 
   // ========== SUBMIT ==========
@@ -278,13 +319,14 @@
       const productData = {
         name:          document.getElementById("pName").value.trim(),
         price:         Number(document.getElementById("pPrice").value),
+        originalPrice: Number(document.getElementById("pOriginalPrice").value) || 0,
+        discountPct:   Number(document.getElementById("pDiscount").value) || 0,
         category:      document.getElementById("pCategory").value,
         condition:     document.getElementById("pCondition").value,
         dimensions:    document.getElementById("pDimensions").value.trim(),
         description:   document.getElementById("pDesc").value.trim(),
         curationStory: document.getElementById("pCurationStory").value.trim(),
         images:        imageUrls,
-        // Keep legacy imageUrl for backward compat (first image)
         imageUrl:      imageUrls[0] || "",
         featured:      document.getElementById("pFeatured").checked,
         available:     document.getElementById("pAvailable").checked,
@@ -320,6 +362,8 @@
     editIdField.value = id;
     document.getElementById("pName").value          = p.name;
     document.getElementById("pPrice").value         = p.price;
+    document.getElementById("pOriginalPrice").value = p.originalPrice || "";
+    document.getElementById("pDiscount").value      = p.discountPct || "";
     document.getElementById("pCategory").value      = p.category;
     document.getElementById("pCondition").value     = p.condition || "";
     document.getElementById("pDimensions").value    = p.dimensions || "";

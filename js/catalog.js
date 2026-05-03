@@ -209,7 +209,14 @@
             <div class="text-[0.72rem] font-semibold text-primary-lighter uppercase tracking-widest mb-1.5">${catLabel}</div>
             <h3 class="font-display text-[1.05rem] font-semibold text-gray-900 mb-1 leading-snug max-md:text-sm">${p.name}</h3>
             ${desc ? `<p class="text-xs text-gray-400 mb-2 line-clamp-2 leading-relaxed">${desc}</p>` : ""}
-            <div class="text-lg font-bold text-primary max-md:text-base"><span class="text-sm font-normal">R$</span> ${formatPrice(p.price)}</div>
+            <div class="text-lg font-bold text-primary max-md:text-base">
+              ${p.discountPct > 0 && p.originalPrice
+                ? `<span class="text-xs font-normal line-through text-gray-300 mr-1">R$ ${formatPrice(p.originalPrice)}</span>
+                   <span class="text-sm font-normal">R$</span> ${formatPrice(p.price)}
+                   <span class="ml-1 text-[0.65rem] font-bold text-white bg-primary px-1.5 py-0.5 rounded-md">-${p.discountPct}%</span>`
+                : `<span class="text-sm font-normal">R$</span> ${formatPrice(p.price)}`
+              }
+            </div>
           </div>
         </article>`;
     }).join("");
@@ -235,7 +242,18 @@
     // Text fields
     document.getElementById("modalCategory").textContent  = catLabel;
     document.getElementById("modalName").textContent      = product.name;
-    document.getElementById("modalPrice").innerHTML       = `<span class="text-base font-normal">R$</span> ${formatPrice(product.price)}`;
+
+    // Price display with optional discount
+    const priceEl = document.getElementById("modalPrice");
+    if (product.discountPct > 0 && product.originalPrice) {
+      priceEl.innerHTML = `
+        <span class="text-sm font-normal line-through text-gray-300 mr-2">R$ ${formatPrice(product.originalPrice)}</span>
+        <span class="text-2xl font-bold text-primary"><span class="text-base font-normal">R$</span> ${formatPrice(product.price)}</span>
+        <span class="ml-2 text-sm font-bold text-white bg-primary px-2.5 py-1 rounded-lg">-${product.discountPct}%</span>`;
+    } else {
+      priceEl.innerHTML = `<span class="text-base font-normal">R$</span> ${formatPrice(product.price)}`;
+    }
+
     document.getElementById("modalDesc").textContent      = product.description || "";
     document.getElementById("modalWhatsapp").href         = generateWhatsAppLink(product);
 

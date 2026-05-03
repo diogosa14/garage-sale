@@ -138,15 +138,28 @@
         <form id="productForm" class="p-8 max-md:p-5">
           <input type="hidden" id="editId">
 
-          <!-- Row 1: Name + Price -->
-          <div class="grid grid-cols-2 gap-5 mb-5 max-md:grid-cols-1">
+          <!-- Row 1: Name -->
+          <div class="mb-5">
+            <label class="field-label">Nome da Peça *</label>
+            <input type="text" id="pName" placeholder="Ex: Mesa de Jantar Saarinen" required class="field-input">
+          </div>
+
+          <!-- Reactive Prices -->
+          <div class="grid grid-cols-3 gap-5 mb-5 max-md:grid-cols-1">
             <div>
-              <label class="field-label">Nome da Peça *</label>
-              <input type="text" id="pName" placeholder="Ex: Mesa de Jantar Saarinen" required class="field-input">
+              <label class="field-label">Preço Original (R$)</label>
+              <input type="number" id="pOriginalPrice" placeholder="2000" min="0" step="1" class="field-input">
+              <p class="text-[0.65rem] text-gray-400 mt-1">Valor de tabela / referência</p>
             </div>
             <div>
-              <label class="field-label">Preço (R$) *</label>
+              <label class="field-label">Preço de Venda (R$) *</label>
               <input type="number" id="pPrice" placeholder="1500" min="0" step="1" required class="field-input">
+              <p class="text-[0.65rem] text-gray-400 mt-1">Preço final exibido na vitrine</p>
+            </div>
+            <div>
+              <label class="field-label">Desconto (%)</label>
+              <input type="number" id="pDiscount" placeholder="0" min="0" max="100" step="1" class="field-input">
+              <p class="text-[0.65rem] text-gray-400 mt-1">Calculado automaticamente</p>
             </div>
           </div>
 
